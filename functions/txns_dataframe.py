@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-with open(os.environ["SAVE_BLOCK_PATH"],'rb') as fp:
+with open(os.environ["SAVE_TXN_PATH"],'rb') as fp:
     transacciones = pickle.load(fp)
 
 zero_address = '0000000000000000000000000000000000000000000000000000000000' #uso esta adress como receiver cuando no hay
@@ -33,11 +33,8 @@ for i in range(len(transacciones)):
         total_addresses.append(transacciones[i]["txn"]["snd"])
         total_addresses.append(zero_address)
  
-# print(txn_type)
-# print(total_addresses)
-# print(len(rcv_addresses))
-# print(len(snd_addresses))
-print(list(set(snd_addresses)))
+
+print(len(set(total_addresses)))
 
 data = {
     'Sender Address': snd_addresses,
@@ -45,6 +42,4 @@ data = {
     'Transaction Type': txn_type,
 }
 df = pd.DataFrame(data)
-df
-
-print(df)
+df.to_pickle("txn_data_frame/txn_dataframe.pickle")

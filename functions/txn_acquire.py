@@ -1,5 +1,9 @@
 import json
 import pickle
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 transacciones = []
 

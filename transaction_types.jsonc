@@ -1,16 +1,16 @@
 // Transaction types
 {
-    "type": "pay",
-    "type": "keyreg",
-    "type": "acfg",
-    "type": "axfer",
-    "type": "afrz",
-    "type": "appl"
-}
+    "type0": "pay",
+    "type1": "keyreg",
+    "type2": "acfg",
+    "type3": "axfer",
+    "type4": "afrz",
+    "type5": "appl"
+
 
 // Payment Transaction
 
-{
+  {
     "txn": {
       "amt": 5000000, //amount in microalgos
       "fee": 1000, // fee de la transaccion
@@ -27,7 +27,7 @@
 
 // Close an account
 
-{
+  {
     "txn": {
       "close": "EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4", // se agrega esta key para mostrar que es de cierre
       "fee": 1000,
@@ -39,13 +39,13 @@
       "snd": "SYGHTA2DR5DYFWJE6D4T34P4AWGCG7JTNMY4VI6EDUVRMX7NG4KTA2WMDA",
       "type": "pay"
     }
- }
+  }
 
 // Key registration
 
 //Register account online
 //Todos los parametros 'este' son relacionados a la exitencia de una key de participacion
-{
+  {
     "txn": {
       "fee": 2000,
       "fv": 6002000,
@@ -63,7 +63,7 @@
 
 // Register account offline
 
-{
+  {
     "txn": {
       "fee": 1000,
       "fv": 7000000,
@@ -78,7 +78,7 @@
 
 //Create an asset
 // Es creacion porque no esta el parametro "caid"  y hay parametros de creacion "asset parameters: apar"
-{
+  {
     "txn": {
       "apar": {
         "am": "gXHjtDdtVpY7IKwJYsJWdCSrnUyRsX4jr3ihzQ2U9CQ=", // metadata hash
@@ -103,7 +103,7 @@
 
 // Reconfigurar un asset
 // Aca se le agrega el "caid"
-{
+  {
     "txn": {
       "apar": {                                                            // Estas 4 son las que se pueden reconfigurar
         "c": "EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4", // esta
@@ -123,7 +123,7 @@
   
 // Destroy an asset
 // Como no hay prametros del asset lo destruye
-{
+  {
     "txn": {
       "caid": 168103,
       "fee": 1000,
@@ -139,7 +139,7 @@
 
 //Opt-in to an asset : supone que el que recibe todavia no tiene un asset de ese tipo
 
-{
+  {
     "txn": {
       "arcv": "QC7XT7QU7X6IHNRJZBR67RBMKCAPH67PCSX4LYH4QKVSQ7DQZ32PG5HSVQ",
       "fee": 1000,
@@ -154,7 +154,7 @@
 
 // Transfer an asset: supone que el recpetor ya tiene un asset de ese tipo
 
-{
+  {
     "txn": {
       "aamt": 1000000,
       "arcv": "QC7XT7QU7X6IHNRJZBR67RBMKCAPH67PCSX4LYH4QKVSQ7DQZ32PG5HSVQ",
@@ -170,7 +170,7 @@
 
 // Revoke an asset
 
-{
+  {
     "txn": {
       "aamt": 500000,
       "arcv": "EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4",
@@ -188,7 +188,7 @@
 
 // Asset freeze
 
-{
+  {
     "txn": {
       "afrz": true, // para unfreezearlo es necesario cambiar esto a false
       "fadd": "QC7XT7QU7X6IHNRJZBR67RBMKCAPH67PCSX4LYH4QKVSQ7DQZ32PG5HSVQ", // address del asset
@@ -208,7 +208,7 @@
 
 //Assuming all the balance and signature checks pass, this will create an Application with a new AppId and subsequent calls.
 
-{
+  {
     "txn": {
       "apap": "BYEB", // application approval program
       "apgs": { //application global state
@@ -232,7 +232,7 @@
 
 // Application update transaction
 
-{
+  {
     "txn": {
       "apan": 4, // On complete is set to Update Application (4)
       "apap": "BYEB",
@@ -250,7 +250,7 @@
 
 // Application delete transaction
 
-{
+  {
     "txn": {
       "apan": 5, // el 5 es DeleteApplication
       "apid": 51,
@@ -268,7 +268,7 @@
 
 //An Application Opt-In transaction must be submitted by an account in order for the local state for that account to be used.
 
-{
+  {
 
   "txn": {
     "apan": 1, // 1 significa OptIn(1)
@@ -289,7 +289,7 @@
 //An Application Close Out transaction is used when an account wants to opt out of a contract gracefully and remove 
 //its local state from its balance record
 
-{
+  {
     "txn": {
       "apan": 2, // 2 significa CloseOut(2)
       "apid": 51,
@@ -307,7 +307,7 @@
 
 // The Clear program is used by the application to perform any book keeping necessary to remove the Account from it's records.
 
-{
+  {
     "txn": {
       "apan": 3, // 3 es ClearState(3)
       "apid": 51,
@@ -323,7 +323,7 @@
 
 //Application NoOp transaction
 
-{
+  {
     "txn": {
       "apaa": [ // transaction specific arguments accedidos por la aplicacion
         "ZG9jcw==",
@@ -347,3 +347,5 @@
       "snd": "LNTMAFSF43V7RQ7FBBRAWPXYZPVEBGKPNUELHHRFMCAWSARPFUYD2A623I",
       "type": "appl"
     }
+}
+}

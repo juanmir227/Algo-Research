@@ -19,9 +19,22 @@ receiver = df['Receiver Address'].tolist()
 
 total = sender + receiver
 
-result = sorted(total, key = total.count, reverse = True)
-resultado = list(set(result))
 
-print(resultado[:10])
 
+# result = sorted(total, key = total.count, reverse = True)
+# resultado = list(set(result))
+
+# #print(resultado[:10])
+
+
+# a = df['Receiver Address']
+# print (a)
+
+new_df = df.groupby(['Receiver Address'])['Sender Address'].count().reset_index(
+  name='Count').sort_values(['Count'], ascending=False)
+
+print(new_df.iloc[0,0])
+
+#Highest frequency address ZW3ISEHZUHPO7OZGMKLKIIMKVICOUDRCERI454I3DB2BH52HGLSO67W754 for senders
+#Highest frequency address C7RYOGEWDT7HZM3HKPSMU7QGWTRWR3EPOQTJ2OHXGYLARD3X62DNWELS34 for receivers
 

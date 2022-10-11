@@ -8,20 +8,19 @@ load_dotenv()
 def join_txns(block_data):
     transacciones = []
     bar = Bar('Processing', max=len(block_data))
-    for i in range(len(block_data)):
-        block = block_data[i]
-        for j in block["block"]["txns"]:
-            transacciones.append(j)
+    for block in block_data:
+        for txn in block["block"]["txns"]:
+            txn['block']= block['block']['rnd']
+            transacciones.append(txn)
         bar.next()
     bar.finish()
     return transacciones
 
-with open(os.environ["SAVE_BLOCK_PATH"],'rb') as f:
+number_of_blocks = 300
+with open(os.environ["SAVE_BLOCK_PATH"] + str(number_of_blocks),'rb') as f:
     data = pickle.load(f)
 
 transacciones = join_txns(data)
 
-print(len(transacciones))
-
-with open("new_block_data/txns_data.pickle", 'wb') as fp:
+with open(os.environ["SAVE_TXN_PATH"]+str(number_of_blocks), 'wb') as fp:
     pickle.dump(transacciones, fp)

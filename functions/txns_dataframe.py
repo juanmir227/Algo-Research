@@ -6,7 +6,8 @@ import ast
 from dotenv import load_dotenv
 load_dotenv()
 
-with open(os.environ["SAVE_TXN_PATH"],'rb') as fp:
+number_of_blocks = 300
+with open(os.environ["SAVE_TXN_PATH"]+str(number_of_blocks),'rb') as fp:
     transacciones = pickle.load(fp)
 
 zero_address = '0000000000000000000000000000000000000000000000000000000000' #uso esta adress como receiver cuando no hay
@@ -87,4 +88,4 @@ data = {
 df = pd.DataFrame(data)
 print(df)
 
-df.to_pickle(os.environ['SAVE_DF_PATH'])
+df.to_pickle(os.environ['SAVE_DF_PATH']+str(number_of_blocks))

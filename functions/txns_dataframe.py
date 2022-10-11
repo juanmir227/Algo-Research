@@ -1,6 +1,8 @@
 import pandas as pd
 import pickle
 import os
+import base64
+import ast
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -9,37 +11,80 @@ with open(os.environ["SAVE_TXN_PATH"],'rb') as fp:
 
 zero_address = '0000000000000000000000000000000000000000000000000000000000' #uso esta adress como receiver cuando no hay
 
-txn_type=[]
-total_addresses = []
+txn_type = []
+txn_note = []
+txn_block = []
 snd_addresses = []
 rcv_addresses = []
-
-for i in range(len(transacciones)):
-    txn_type.append(transacciones[i]["txn"]["type"])
-    if 'arcv' in transacciones[i]["txn"].keys():
-        total_addresses.append(transacciones[i]["txn"]["snd"])
-        total_addresses.append(transacciones[i]["txn"]["arcv"])
-        snd_addresses.append(transacciones[i]["txn"]["snd"])
-        rcv_addresses.append(transacciones[i]["txn"]["arcv"])
-        
-    elif 'rcv' in transacciones[i]["txn"].keys():
-        total_addresses.append(transacciones[i]["txn"]["snd"])
-        total_addresses.append(transacciones[i]["txn"]["rcv"])
-        snd_addresses.append(transacciones[i]["txn"]["snd"])
-        rcv_addresses.append(transacciones[i]["txn"]["rcv"])
+amount=[]
+app_or_asset_id = []
+for transaction in transacciones:
+    type = transaction["txn"]["type"]
+    txn_type.append(type)
+    txn_block.append(transaction['block'])
+    if 'amt' in transaction['txn']:
+        amount.append(transaction['txn']['amt'])
+    elif 'aamt' in transaction['txn']:
+        amount.append(transaction['txn']['aamt'])
     else:
-        snd_addresses.append(transacciones[i]["txn"]["snd"])
+        amount.append('NA')
+    if 'xaid' in transaction['txn']:
+        app_or_asset_id.append(transaction['txn']['xaid'])
+    elif 'apid' in transaction['txn']:
+        app_or_asset_id.append(transaction['txn']['apid'])
+    else:
+        app_or_asset_id.append('NA')
+    if 'note' in transaction['txn']:
+        txn_note.append(transaction['txn']['note'])
+    else:
+        txn_note.append('NA')
+    if 'arcv' in transaction["txn"].keys():
+        snd_addresses.append(transaction["txn"]["snd"])
+        rcv_addresses.append(transaction["txn"]["arcv"])
+        
+    elif 'rcv' in transaction["txn"].keys():
+        snd_addresses.append(transaction["txn"]["snd"])
+        rcv_addresses.append(transaction["txn"]["rcv"])
+    else:
+        snd_addresses.append(transaction["txn"]["snd"])
         rcv_addresses.append(zero_address)
-        total_addresses.append(transacciones[i]["txn"]["snd"])
-        total_addresses.append(zero_address)
- 
 
-print(len(set(total_addresses)))
+notes = []
+
+# for note in txn_note:
+for note in txn_note:
+
+    if note != 'NA':
+        notes_b = base64.b64decode(note)
+        notes.append(notes_b)
+    else:
+        notes.append(note)
+#     print('hey')
+#     notes_b = base64.b64decode(note)
+    # note_str = notes_b.decode("UTF-8", errors = 'ignore')
+    # notes.append(ast.literal_eval(note_str))
+    # note_dict.append(ast.literal_eval(repr(note_bytes)))
+
+
+# dict_str = note_bytes.decode('UTF-8')
+# note = ast.literal_eval(dict_str)
+
+# note_deco = []
+# for i in range(len(txn_note)):
+#     note = txn_note[i]
+#     note.byte_str.decode('UTF-8')
 
 data = {
     'Sender Address': snd_addresses,
     'Receiver Address': rcv_addresses,
     'Transaction Type': txn_type,
+    'Transaction note': notes,
+    'Transaction block': txn_block,
+    'Transaction Amount': amount,
+    'App or Asset Id': app_or_asset_id,
 }
+
 df = pd.DataFrame(data)
-df.to_pickle("txn_data_frame/txn_dataframe.pickle")
+print(df)
+
+df.to_pickle(os.environ['SAVE_DF_PATH'])

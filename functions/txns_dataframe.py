@@ -6,11 +6,9 @@ import ast
 from dotenv import load_dotenv
 load_dotenv()
 
-number_of_blocks = 300
+number_of_blocks = int(os.environ["NUMBER_OF_BLOCKS"])
 with open(os.environ["SAVE_TXN_PATH"]+str(number_of_blocks),'rb') as fp:
     transacciones = pickle.load(fp)
-
-zero_address = '0000000000000000000000000000000000000000000000000000000000' #uso esta adress como receiver cuando no hay
 
 txn_type = []
 txn_note = []
@@ -18,37 +16,47 @@ txn_block = []
 snd_addresses = []
 rcv_addresses = []
 amount=[]
-app_or_asset_id = []
+asset_id = []
+
+
 for transaction in transacciones:
-    type = transaction["txn"]["type"]
-    txn_type.append(type)
+    #agrego el tipo de transaccion
+    txn_type.append(transaction["txn"]["type"])
+    #agrego el numero de bloque
     txn_block.append(transaction['block'])
+    #lleno el vector de amount
     if 'amt' in transaction['txn']:
         amount.append(transaction['txn']['amt'])
     elif 'aamt' in transaction['txn']:
         amount.append(transaction['txn']['aamt'])
     else:
         amount.append('NA')
+    #lleno el vector de asset id
     if 'xaid' in transaction['txn']:
-        app_or_asset_id.append(transaction['txn']['xaid'])
-    elif 'apid' in transaction['txn']:
-        app_or_asset_id.append(transaction['txn']['apid'])
+        asset_id.append(transaction['txn']['xaid'])
     else:
-        app_or_asset_id.append('NA')
+        asset_id.append('NA')
+    #si interactua con un aplicacion en reciever agrego el id de la aplicacion
+    if 'apid' in transaction['txn']:
+        snd_addresses.append(transaction["txn"]["snd"])
+        rcv_addresses.append(transaction['txn']['apid'])
+    #si existe una nota en la transaccion la guardo no se para que
     if 'note' in transaction['txn']:
         txn_note.append(transaction['txn']['note'])
     else:
         txn_note.append('NA')
-    if 'arcv' in transaction["txn"].keys():
+    #lleno los receivers y los senders
+    if 'arcv' in transaction["txn"]:
         snd_addresses.append(transaction["txn"]["snd"])
         rcv_addresses.append(transaction["txn"]["arcv"])
         
-    elif 'rcv' in transaction["txn"].keys():
+    elif 'rcv' in transaction["txn"]:
         snd_addresses.append(transaction["txn"]["snd"])
         rcv_addresses.append(transaction["txn"]["rcv"])
-    else:
-        snd_addresses.append(transaction["txn"]["snd"])
-        rcv_addresses.append(zero_address)
+    elif 'caid' in transaction:
+        snd_addresses.append(transaction['txn']['snd'])
+        rcv_addresses.append(transaction['caid'])
+
 
 notes = []
 
@@ -60,11 +68,6 @@ for note in txn_note:
         notes.append(notes_b)
     else:
         notes.append(note)
-#     print('hey')
-#     notes_b = base64.b64decode(note)
-    # note_str = notes_b.decode("UTF-8", errors = 'ignore')
-    # notes.append(ast.literal_eval(note_str))
-    # note_dict.append(ast.literal_eval(repr(note_bytes)))
 
 
 # dict_str = note_bytes.decode('UTF-8')
@@ -82,7 +85,7 @@ data = {
     'Transaction note': notes,
     'Transaction block': txn_block,
     'Transaction Amount': amount,
-    'App or Asset Id': app_or_asset_id,
+    'Asset Id': asset_id,
 }
 
 df = pd.DataFrame(data)

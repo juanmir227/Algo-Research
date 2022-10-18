@@ -29,7 +29,7 @@ headers = {
     "X-API-Key": os.environ["PURESTAKE_API"],
 }
 algod_client = algod.AlgodClient(algod_token, algod_address, headers)
-number_of_blocks = 300
+number_of_blocks = int(os.environ["NUMBER_OF_BLOCKS"])
 blocks = GetBlockInfo(algod_client,number_of_blocks) #aca cambiando el numerito cambia la cantidad de bloques que bajo
 
 with open(os.environ["SAVE_BLOCK_PATH"]+str(number_of_blocks), 'wb') as what:

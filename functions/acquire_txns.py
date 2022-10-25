@@ -16,6 +16,8 @@ def join_txns(block_data):
     bar.finish()
     return transacciones
 
+
+
 number_of_blocks = int(os.environ["NUMBER_OF_BLOCKS"])
 
 with open(os.environ["SAVE_BLOCK_PATH"] + str(number_of_blocks),'rb') as f:

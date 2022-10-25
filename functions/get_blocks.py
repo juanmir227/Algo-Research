@@ -23,14 +23,19 @@ def GetBlockInfo(client, block_number):
     bar.finish()
     return blocks
 
+
+
 algod_address = "https://mainnet-algorand.api.purestake.io/ps2"
 algod_token = ""
 headers = {
     "X-API-Key": os.environ["PURESTAKE_API"],
 }
+
+
 algod_client = algod.AlgodClient(algod_token, algod_address, headers)
-number_of_blocks = int(os.environ["NUMBER_OF_BLOCKS"])
-blocks = GetBlockInfo(algod_client,number_of_blocks) #aca cambiando el numerito cambia la cantidad de bloques que bajo
+
+number_of_blocks = int(os.environ["NUMBER_OF_BLOCKS"]) #aca cambiando el numerito cambia la cantidad de bloques que bajo
+blocks = GetBlockInfo(algod_client,number_of_blocks) 
 
 with open(os.environ["SAVE_BLOCK_PATH"]+str(number_of_blocks), 'wb') as what:
     pickle.dump(blocks, what)

@@ -78,11 +78,11 @@ def make_df(transacciones):
             if 'apid' in transaction:
                 snd_addresses.append(transaction['txn']['snd'])
                 rcv_addresses.append(transaction['apid'])
-                asset_id.append(transaction['apid'])
+                asset_id.append('NA')
             else:
                 snd_addresses.append(transaction['txn']['snd'])
                 rcv_addresses.append(transaction['txn']['apid'])
-                asset_id.append(transaction['txn']['apid'])
+                asset_id.append('NA')
     notes = []
 
     for note in txn_note:

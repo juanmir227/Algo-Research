@@ -9,8 +9,9 @@ load_dotenv()
 
 
 number_of_blocks = int(os.environ["NUMBER_OF_BLOCKS"])
-df = pd.read_pickle(os.environ['SAVE_DF_PATH']+str(number_of_blocks))
+initial_block_number = int(os.environ["INITIAL_BLOCK_NUMBER"])
+df = pd.read_pickle(os.environ['SAVE_DF_PATH']+"_"+str(initial_block_number)+"_"+str(number_of_blocks))
 
 G = nx.from_pandas_edgelist(df,'Sender Address', 'Receiver Address')
 
-nx.write_gexf(G,os.environ["SAVE_GEPHI_PATH"] + str(number_of_blocks)+'.gexf')
+nx.write_gexf(G,os.environ["SAVE_GEPHI_PATH"]+"_"+str(initial_block_number)+"_" + str(number_of_blocks)+'.gexf')

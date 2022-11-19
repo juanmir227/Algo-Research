@@ -9,13 +9,13 @@ from progress.bar import Bar
 
 #round  reference 23.739.705
 
-def GetBlockInfo(client, block_number):
+def GetBlockInfo(client,initial_block_number, block_number):
     blocks = []
     bar = Bar('Downloading', max=block_number)
     for i in range(block_number):
         # Retrieve block information                                                                                                                                              
         try:
-            block = client.block_info(20000000+i)
+            block = client.block_info(initial_block_number+i)
         except Exception as e:
             print("Failed to get algod status: {}".format(e))
         blocks.append(block)
@@ -31,11 +31,11 @@ headers = {
     "X-API-Key": os.environ["PURESTAKE_API"],
 }
 
-
 algod_client = algod.AlgodClient(algod_token, algod_address, headers)
 
-number_of_blocks = int(os.environ["NUMBER_OF_BLOCKS"]) #aca cambiando el numerito cambia la cantidad de bloques que bajo
-blocks = GetBlockInfo(algod_client,number_of_blocks) 
+initial_block_number = int(os.environ["INITIAL_BLOCK_NUMBER"])
+number_of_blocks = int(os.environ["NUMBER_OF_BLOCKS"])
+blocks = GetBlockInfo(algod_client,initial_block_number,number_of_blocks)
 
-with open(os.environ["SAVE_BLOCK_PATH"]+str(number_of_blocks), 'wb') as what:
+with open(os.environ["SAVE_BLOCK_PATH"]+"_"+str(initial_block_number)+'_'+str(number_of_blocks), 'wb') as what:
     pickle.dump(blocks, what)

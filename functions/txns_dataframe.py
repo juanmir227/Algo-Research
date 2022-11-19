@@ -6,7 +6,7 @@ import ast
 from dotenv import load_dotenv
 load_dotenv()
 
-def make_df(transacciones):
+def make_df(transacciones,number_of_blocks):
     txn_type = []
     txn_note = []
     txn_block = []
@@ -103,11 +103,11 @@ def make_df(transacciones):
     }
     df = pd.DataFrame(data)
     print(df)
-    df.to_pickle(os.environ['SAVE_DF_PATH']+str(number_of_blocks))
+    df.to_pickle(os.environ['SAVE_DF_PATH']+"_"+os.environ["INITIAL_BLOCK_NUMBER"]+"_"+str(number_of_blocks))
 
 
 
 number_of_blocks = int(os.environ["NUMBER_OF_BLOCKS"])
-with open(os.environ["SAVE_TXN_PATH"]+str(number_of_blocks),'rb') as fp:
+with open(os.environ["SAVE_TXN_PATH"]+"_"+os.environ["INITIAL_BLOCK_NUMBER"]+"_"+str(number_of_blocks),'rb') as fp:
     transacciones = pickle.load(fp)
-make_df(transacciones)
+make_df(transacciones,number_of_blocks)

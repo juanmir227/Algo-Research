@@ -50,8 +50,12 @@ def make_df(transacciones):
                 asset_id.append(transaction['caid'])
             else:
                 snd_addresses.append(transaction['txn']['snd'])
-                rcv_addresses.append(transaction['txn']['caid'])
-                asset_id.append(transaction['txn']['caid'])
+                try:
+                    rcv_addresses.append(transaction['txn']['caid'])
+                    asset_id.append(transaction['txn']['caid'])
+                except KeyError:
+                    rcv_addresses.append("NA")
+                    asset_id.append('NA')
 
         if type == 'axfer':
             if 'asnd' in transaction['txn']:
@@ -60,9 +64,12 @@ def make_df(transacciones):
                 asset_id.append('NA')
             else:
                 snd_addresses.append(transaction['txn']['snd'])
-                rcv_addresses.append(transaction['txn']['arcv'])
-                asset_id.append(transaction['txn']['xaid'])
-
+                try:
+                    rcv_addresses.append(transaction['txn']['arcv'])
+                    asset_id.append(transaction['txn']['xaid'])
+                except KeyError:
+                    rcv_addresses.append("NA")
+                    asset_id.append("NA")
 
         if type == 'afrz':
             snd_addresses.append(transaction['txn']['snd'])

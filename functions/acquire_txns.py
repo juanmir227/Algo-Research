@@ -15,15 +15,3 @@ def join_txns(block_data):
         bar.next()
     bar.finish()
     return transacciones
-
-
-
-number_of_blocks = int(os.environ["NUMBER_OF_BLOCKS"])
-
-with open(os.environ["SAVE_BLOCK_PATH"] +"_"+ os.environ["INITIAL_BLOCK_NUMBER"] +'_'+ str(number_of_blocks),'rb') as f:
-    data = pickle.load(f)
-
-transacciones = join_txns(data)
-
-with open(os.environ["SAVE_TXN_PATH"]+"_"+os.environ["INITIAL_BLOCK_NUMBER"]+"_"+str(number_of_blocks), 'wb') as fp:
-    pickle.dump(transacciones, fp)

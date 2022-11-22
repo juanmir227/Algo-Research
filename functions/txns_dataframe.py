@@ -1,12 +1,8 @@
-import pandas as pd
-import pickle
-import os
 import base64
-import ast
 from dotenv import load_dotenv
 load_dotenv()
 
-def make_df(transacciones,number_of_blocks):
+def make_df(transacciones):
     txn_type = []
     txn_note = []
     txn_block = []
@@ -15,8 +11,10 @@ def make_df(transacciones,number_of_blocks):
     amount=[]
     asset_id = []
     zero_address = "0000000000000000000000000000000000000000000000000000000000"
-
+    a = 0
     for transaction in transacciones:
+        print(a)
+        a = a+1
         type = transaction['txn']['type']
         txn_type.append(type)
         txn_block.append(transaction['block'])
@@ -101,13 +99,4 @@ def make_df(transacciones,number_of_blocks):
         'Transaction Amount': amount,
         'Asset Id': asset_id,
     }
-    df = pd.DataFrame(data)
-    print(df)
-    df.to_pickle(os.environ['SAVE_DF_PATH']+"_"+os.environ["INITIAL_BLOCK_NUMBER"]+"_"+str(number_of_blocks))
-
-
-
-number_of_blocks = int(os.environ["NUMBER_OF_BLOCKS"])
-with open(os.environ["SAVE_TXN_PATH"]+"_"+os.environ["INITIAL_BLOCK_NUMBER"]+"_"+str(number_of_blocks),'rb') as fp:
-    transacciones = pickle.load(fp)
-make_df(transacciones,number_of_blocks)
+    return data

@@ -11,10 +11,7 @@ def make_df(transacciones):
     amount=[]
     asset_id = []
     zero_address = "0000000000000000000000000000000000000000000000000000000000"
-    a = 0
     for transaction in transacciones:
-        print(a)
-        a = a+1
         type = transaction['txn']['type']
         txn_type.append(type)
         txn_block.append(transaction['block'])
@@ -79,8 +76,12 @@ def make_df(transacciones):
                 asset_id.append('NA')
             else:
                 snd_addresses.append(transaction['txn']['snd'])
-                rcv_addresses.append(transaction['txn']['apid'])
-                asset_id.append('NA')
+                try:
+                    rcv_addresses.append(transaction['txn']['apid'])
+                    asset_id.append('NA')
+                except KeyError:
+                    rcv_addresses.append("NA")
+                    asset_id.append('NA')
     notes = []
 
     for note in txn_note:

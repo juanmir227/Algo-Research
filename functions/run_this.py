@@ -28,7 +28,7 @@ algod_client = algod.AlgodClient(algod_token, algod_address, headers)
 # 9 millones es el bloque minimo para arrancar, antes de eso no funciona, se ve que estructuraban los bloques diferente
 # o todavia no habia transacciones, no se la verdad.
 
-initial_number = 12000000
+initial_number = 24000000
 number_of_blocks = 500
 #genero chunk de 5 bloques cada 1 millon de bloques
 while initial_number <= 24000000:

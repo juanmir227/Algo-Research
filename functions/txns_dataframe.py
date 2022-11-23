@@ -12,6 +12,7 @@ def make_df(transacciones):
     asset_id = []
     zero_address = "0000000000000000000000000000000000000000000000000000000000"
     for transaction in transacciones:
+
         type = transaction['txn']['type']
         txn_type.append(type)
         txn_block.append(transaction['block'])
@@ -49,11 +50,12 @@ def make_df(transacciones):
                 rcv_addresses.append(transaction['caid'])
                 asset_id.append(transaction['caid'])
             else:
-                snd_addresses.append(transaction['txn']['snd'])
                 try:
+                    snd_addresses.append(transaction['txn']['snd'])
                     rcv_addresses.append(transaction['txn']['caid'])
                     asset_id.append(transaction['txn']['caid'])
                 except KeyError:
+                    snd_addresses.append(transaction['txn']['snd'])
                     rcv_addresses.append("NA")
                     asset_id.append('NA')
 
@@ -63,11 +65,12 @@ def make_df(transacciones):
                 rcv_addresses.append(transaction['txn']['asnd'])
                 asset_id.append('NA')
             else:
-                snd_addresses.append(transaction['txn']['snd'])
                 try:
+                    snd_addresses.append(transaction['txn']['snd'])
                     rcv_addresses.append(transaction['txn']['arcv'])
                     asset_id.append(transaction['txn']['xaid'])
                 except KeyError:
+                    snd_addresses.append(transaction['txn']['snd'])
                     rcv_addresses.append("NA")
                     asset_id.append("NA")
 
@@ -82,11 +85,12 @@ def make_df(transacciones):
                 rcv_addresses.append(transaction['apid'])
                 asset_id.append('NA')
             else:
-                snd_addresses.append(transaction['txn']['snd'])
                 try:
+                    snd_addresses.append(transaction['txn']['snd'])
                     rcv_addresses.append(transaction['txn']['apid'])
                     asset_id.append('NA')
                 except KeyError:
+                    snd_addresses.append(transaction['txn']['snd'])
                     rcv_addresses.append("NA")
                     asset_id.append('NA')
     notes = []

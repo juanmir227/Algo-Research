@@ -1,6 +1,7 @@
 import base64
 from dotenv import load_dotenv
 load_dotenv()
+from datetime import datetime
 
 def make_df(transacciones):
     txn_type = []
@@ -10,6 +11,7 @@ def make_df(transacciones):
     rcv_addresses = []
     amount=[]
     asset_id = []
+    date = []
     zero_address = "0000000000000000000000000000000000000000000000000000000000"
     for transaction in transacciones:
 
@@ -110,5 +112,6 @@ def make_df(transacciones):
         'Transaction block': txn_block,
         'Transaction Amount': amount,
         'Asset Id': asset_id,
+        'Transaction Date': date,
     }
     return data

@@ -53,7 +53,7 @@ created_apps = []
 
 for init_number in initial_number:
 
-    df = pd.read_pickle(os.environ['SAVE_DF_PATH']+"_"+str(init_number)+"_"+str(number_of_blocks))
+    df = pd.read_pickle(os.environ['SAVE_DF_PATH']+"_"+str(init_number)+"_"+str(number_of_blocks)+"_filtered")
 
     sender = df['Sender Address'].tolist()
     receiver = df['Receiver Address'].tolist()
@@ -412,132 +412,6 @@ more_than_one_algo_percentage, mean_amount_of_algo_sent]
 
 with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + 'data_lists', 'wb') as fp:
     pickle.dump(data_lists, fp)
-
-
-# lists = [created_apps, total_transaction_amount, total_sender_number, total_receiver_number, total_active_accounts, mean_transaction_amount_per_sender,
-# mean_transaction_amount_per_receiver, mean_amount_of_unique_receiver_for_sender, mean_amount_of_unique_sender_for_receiver, only_sender_accounts,
-# only_receiver_accounts, percent_of_senders_only_senders, percent_of_receivers_only_receivers, percent_of_accounts_only_senders, percent_of_accounts_only_receivers,
-# sender_average_transacted_accounts, receiver_average_transacted_accounts,sender_average_transacted_with_same_accounts, receiver_average_transacted_with_same_accounts,
-# most_frequent_ids, percentage_of_total_transactions_per_asset, unique_senders_per_asset, unique_receivers_per_asset, unique_accounts_per_asset,
-# percentage_of_total_accounts_per_asset, transactions_one_algo, involved_accounts_per_type, involved_senders_per_type, involved_receivers_per_type,
-# percentage_of_total_accounts_per_type, transaction_amount_in_microalgo, closing_transactions_count, more_than_one_algo,
-# more_than_one_algo_percentage, mean_amount_of_algo_sent]
-
-# for listed in lists:
-
-#     with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(listed), 'wb') as fp:
-#         pickle.dump(listed, fp)
-
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(created_apps), 'wb') as fp:
-#     pickle.dump(created_apps, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(total_transaction_amount), 'wb') as fp:
-#     pickle.dump(total_transaction_amount, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(total_sender_number), 'wb') as fp:
-#     pickle.dump(total_sender_number, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(total_receiver_number), 'wb') as fp:
-#     pickle.dump(total_receiver_number, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(total_active_accounts), 'wb') as fp:
-#     pickle.dump(total_active_accounts, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(mean_transaction_amount_per_sender), 'wb') as fp:
-#     pickle.dump(mean_transaction_amount_per_sender, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(mean_transaction_amount_per_receiver), 'wb') as fp:
-#     pickle.dump(mean_transaction_amount_per_receiver, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(mean_amount_of_unique_receiver_for_sender), 'wb') as fp:
-#     pickle.dump(mean_amount_of_unique_receiver_for_sender, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(mean_amount_of_unique_sender_for_receiver), 'wb') as fp:
-#     pickle.dump(mean_amount_of_unique_sender_for_receiver, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(only_sender_accounts), 'wb') as fp:
-#     pickle.dump(only_sender_accounts, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(only_receiver_accounts), 'wb') as fp:
-#     pickle.dump(only_receiver_accounts, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(percent_of_senders_only_senders), 'wb') as fp:
-#     pickle.dump(percent_of_senders_only_senders, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(percent_of_receivers_only_receivers), 'wb') as fp:
-#     pickle.dump(percent_of_receivers_only_receivers, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(percent_of_accounts_only_senders), 'wb') as fp:
-#     pickle.dump(percent_of_accounts_only_senders, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(percent_of_accounts_only_receivers), 'wb') as fp:
-#     pickle.dump(percent_of_accounts_only_receivers, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(sender_average_transacted_accounts), 'wb') as fp:
-#     pickle.dump(sender_average_transacted_accounts, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(receiver_average_transacted_accounts), 'wb') as fp:
-#     pickle.dump(receiver_average_transacted_accounts, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(sender_average_transacted_with_same_accounts), 'wb') as fp:
-#     pickle.dump(sender_average_transacted_with_same_accounts, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(receiver_average_transacted_with_same_accounts), 'wb') as fp:
-#     pickle.dump(receiver_average_transacted_with_same_accounts, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(most_frequent_ids), 'wb') as fp:
-#     pickle.dump(most_frequent_ids, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(percentage_of_total_transactions_per_asset), 'wb') as fp:
-#     pickle.dump(percentage_of_total_transactions_per_asset, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(unique_senders_per_asset), 'wb') as fp:
-#     pickle.dump(unique_senders_per_asset, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(unique_receivers_per_asset), 'wb') as fp:
-#     pickle.dump(unique_receivers_per_asset, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(unique_accounts_per_asset), 'wb') as fp:
-#     pickle.dump(unique_accounts_per_asset, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(percentage_of_total_accounts_per_asset), 'wb') as fp:
-#     pickle.dump(percentage_of_total_accounts_per_asset, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(transactions_one_algo), 'wb') as fp:
-#     pickle.dump(transactions_one_algo, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(involved_accounts_per_type), 'wb') as fp:
-#     pickle.dump(involved_accounts_per_type, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(involved_senders_per_type), 'wb') as fp:
-#     pickle.dump(involved_senders_per_type, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(involved_receivers_per_type), 'wb') as fp:
-#     pickle.dump(involved_receivers_per_type, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(percentage_of_total_accounts_per_type), 'wb') as fp:
-#     pickle.dump(percentage_of_total_accounts_per_type, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(transaction_amount_in_microalgo), 'wb') as fp:
-#     pickle.dump(transaction_amount_in_microalgo, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(closing_transactions_count), 'wb') as fp:
-#     pickle.dump(closing_transactions_count, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(more_than_one_algo), 'wb') as fp:
-#     pickle.dump(more_than_one_algo, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(more_than_one_algo_percentage), 'wb') as fp:
-#     pickle.dump(more_than_one_algo_percentage, fp)
-
-# with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + nameof(mean_amount_of_algo_sent), 'wb') as fp:
-#     pickle.dump(mean_amount_of_algo_sent, fp)
-
-
-
-
-
 
     # # Numero de transacciones totales en 500    bloques
     # print(init_number)

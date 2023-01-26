@@ -1,0 +1,4 @@
+por chunk ver si hay pibes que se repiten en los otros chunks (tanto como sender como de receiver)
+
+forma de acotar cuantas transacciones hace un usuario activo "humano" en comparacion con un contrato
+La cota va cambiando con el tiempo estaria bueno mostrar como cambia la cota para ser considerado activo

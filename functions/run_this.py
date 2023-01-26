@@ -28,17 +28,21 @@ algod_client = algod.AlgodClient(algod_token, algod_address, headers)
 # 9 millones es el bloque minimo para arrancar, antes de eso no funciona, se ve que estructuraban los bloques diferente
 # o todavia no habia transacciones, no se la verdad.
 
-initial_number = 24000000
+initial_number = 12000000
 number_of_blocks = 500
+
 #genero chunk de 5 bloques cada 1 millon de bloques
 while initial_number <= 24000000:
     initial_block_number = initial_number
+    print(initial_block_number)
     initial_number = initial_number + 1000000
     #descargo los bloques y los guardo
-    blocks = GetBlockInfo(algod_client,initial_block_number,number_of_blocks)
-    with open(os.environ["SAVE_BLOCK_PATH"]+"_"+str(initial_block_number)+'_'+str(number_of_blocks), 'wb') as what:
-        pickle.dump(blocks, what)
-
+    # blocks = GetBlockInfo(algod_client,initial_block_number,number_of_blocks)
+    # with open(os.environ["SAVE_BLOCK_PATH"]+"_"+str(initial_block_number)+'_'+str(number_of_blocks), 'wb') as what:
+    #     pickle.dump(blocks, what)
+    #en caso de ya tener los bloques directamente los cargo
+    with open(os.environ["SAVE_BLOCK_PATH"]+"_"+str(initial_block_number)+'_'+str(number_of_blocks), 'rb') as what:
+        blocks = pickle.load(what)
     #genero toda la lista de transacciones y las guardo
     transacciones = join_txns(blocks)
     with open(os.environ["SAVE_TXN_PATH"]+"_"+str(initial_block_number)+"_"+str(number_of_blocks), 'wb') as fp:

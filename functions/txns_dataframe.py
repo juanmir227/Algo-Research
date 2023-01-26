@@ -4,19 +4,22 @@ load_dotenv()
 from datetime import datetime
 
 def make_df(transacciones):
+    print('generando dataframe')
     txn_type = []
     txn_note = []
     txn_block = []
+    txn_date = []
     snd_addresses = []
     rcv_addresses = []
     amount=[]
     asset_id = []
-    date = []
     zero_address = "0000000000000000000000000000000000000000000000000000000000"
     for transaction in transacciones:
-
         type = transaction['txn']['type']
         txn_type.append(type)
+        date_ts = transaction['date']
+        date = datetime.fromtimestamp(date_ts)
+        txn_date.append(date)
         txn_block.append(transaction['block'])
         if 'note' in transaction['txn']:
             txn_note.append(transaction['txn']['note'])
@@ -47,19 +50,14 @@ def make_df(transacciones):
             asset_id.append('NA')
     
         if type == 'acfg':
-            if 'caid' in transaction:
+            if 'caid' in transaction['txn']:
                 snd_addresses.append(transaction['txn']['snd'])
-                rcv_addresses.append(transaction['caid'])
-                asset_id.append(transaction['caid'])
+                rcv_addresses.append(transaction['txn']['caid'])
+                asset_id.append(transaction['txn']['caid'])
             else:
-                try:
-                    snd_addresses.append(transaction['txn']['snd'])
-                    rcv_addresses.append(transaction['txn']['caid'])
-                    asset_id.append(transaction['txn']['caid'])
-                except KeyError:
-                    snd_addresses.append(transaction['txn']['snd'])
-                    rcv_addresses.append("NA")
-                    asset_id.append('NA')
+                snd_addresses.append(transaction['txn']['snd'])
+                rcv_addresses.append("NA")
+                asset_id.append('NA')
 
         if type == 'axfer':
             if 'asnd' in transaction['txn']:
@@ -67,14 +65,10 @@ def make_df(transacciones):
                 rcv_addresses.append(transaction['txn']['asnd'])
                 asset_id.append('NA')
             else:
-                try:
-                    snd_addresses.append(transaction['txn']['snd'])
-                    rcv_addresses.append(transaction['txn']['arcv'])
-                    asset_id.append(transaction['txn']['xaid'])
-                except KeyError:
-                    snd_addresses.append(transaction['txn']['snd'])
-                    rcv_addresses.append("NA")
-                    asset_id.append("NA")
+                snd_addresses.append(transaction['txn']['snd'])
+                rcv_addresses.append(transaction['txn']['arcv'])
+                asset_id.append(transaction['txn']['xaid'])
+
 
         if type == 'afrz':
             snd_addresses.append(transaction['txn']['snd'])
@@ -82,19 +76,28 @@ def make_df(transacciones):
             asset_id.append(transaction['txn']['faid'])
 
         if type == 'appl':
-            if 'apid' in transaction:
+            if 'apid' in transaction['txn']:
+                # update, delete, opt in, close out, clear state, no op
                 snd_addresses.append(transaction['txn']['snd'])
-                rcv_addresses.append(transaction['apid'])
+                rcv_addresses.append(transaction['txn']['apid'])
                 asset_id.append('NA')
             else:
-                try:
-                    snd_addresses.append(transaction['txn']['snd'])
-                    rcv_addresses.append(transaction['txn']['apid'])
-                    asset_id.append('NA')
-                except KeyError:
-                    snd_addresses.append(transaction['txn']['snd'])
-                    rcv_addresses.append("NA")
-                    asset_id.append('NA')
+                #creation
+                snd_addresses.append(transaction['txn']['snd'])
+                rcv_addresses.append('NA')
+                asset_id.append('NA')
+                # snd_addresses.append(transaction['txn']['snd'])
+                # rcv_addresses.append(transaction['txn']['apid'])
+                # asset_id.append('NA')
+                #
+                # try:
+                # snd_addresses.append(transaction['txn']['snd'])
+                #     rcv_addresses.append(transaction['txn']['apid'])
+                #     asset_id.append('NA')
+                # except KeyError:
+                #     snd_addresses.append(transaction['txn']['snd'])
+                #     rcv_addresses.append('NA')
+                #     asset_id.append('NA')
     notes = []
 
     for note in txn_note:
@@ -104,14 +107,23 @@ def make_df(transacciones):
             notes.append(notes_b)
         else:
             notes.append(note)
+            
     data = {
         'Sender Address': snd_addresses,
         'Receiver Address': rcv_addresses,
         'Transaction Type': txn_type,
-        'Transaction note': notes,
         'Transaction block': txn_block,
         'Transaction Amount': amount,
         'Asset Id': asset_id,
-        'Transaction Date': date,
+        'Transaction Date': txn_date,
+        'Transaction note': notes
     }
+    # print(len(snd_addresses))
+    # print(len(rcv_addresses))
+    # print(len(txn_type))
+    # print(len(txn_block))
+    # print(len(amount))
+    # print(len(asset_id))
+    # print(len(txn_date))
+    # print(len(notes))
     return data

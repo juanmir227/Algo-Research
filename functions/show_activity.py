@@ -11,7 +11,7 @@ df = pd.read_pickle(os.environ["ACTIVITY_DF"] + "activitydf")
 
 activity = df['Total activity'].tolist()
 arr_activity = np.array(activity)
-
+print(len(arr_activity))
 plt.hist(arr_activity, bins = 15)
 plt.show()
 

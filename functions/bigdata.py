@@ -49,7 +49,7 @@ more_than_one_algo = []
 more_than_one_algo_percentage = []
 mean_amount_of_algo_sent = []
 created_apps = []
-
+percentage_of_all_transactions_per_type = []
 
 for init_number in initial_number:
 
@@ -288,13 +288,17 @@ for init_number in initial_number:
     senders_per_type = {}
     receivers_per_type = {}
     accounts_per_type = {}
+    percentage_for_type = {}
     total_accounts_involved = []
-
     for txn_types in txn_type:
+        all_transactions = len(df['Sender Address'].tolist())
         df_with_type = df[df['Transaction Type'] == txn_types]
+        amount_of_transactions_per_type = len(df_with_type['Receiver Address'].tolist())
+        percentage_per_type = amount_of_transactions_per_type/all_transactions
         senders_involved = df_with_type['Sender Address'].tolist()
         receivers_involved = df_with_type['Receiver Address'].tolist()
         total_involved = senders_involved + receivers_involved
+        percentage_for_type[txn_types] = percentage_per_type
         accounts_per_type[txn_types] = len(list(set(total_involved)))
         senders_per_type[txn_types] = len(list(set(senders_involved)))
         receivers_per_type[txn_types] = len(list(set(receivers_involved)))
@@ -365,6 +369,11 @@ for init_number in initial_number:
     app_receivers = apps['Receiver Address'].tolist()
     apps_created = app_receivers.count('NA')
 
+
+    transaction_type = df['Transaction Type'].tolist()
+
+
+
     created_apps.append(apps_created)
     total_transaction_amount.append(total_transactions)
     total_sender_number.append(len(sender_unique))
@@ -400,6 +409,7 @@ for init_number in initial_number:
     more_than_one_algo.append(len(more_than_one))
     more_than_one_algo_percentage.append(percent_more_than_one)
     mean_amount_of_algo_sent.append(mean_amount)
+    percentage_of_all_transactions_per_type.append(percentage_for_type)
 
 data_lists = [created_apps, total_transaction_amount, total_sender_number, total_receiver_number, total_active_accounts, mean_transaction_amount_per_sender,
 mean_transaction_amount_per_receiver, mean_amount_of_unique_receiver_for_sender, mean_amount_of_unique_sender_for_receiver, only_sender_accounts,
@@ -408,7 +418,7 @@ sender_average_transacted_accounts, receiver_average_transacted_accounts,sender_
 most_frequent_ids, percentage_of_total_transactions_per_asset, unique_senders_per_asset, unique_receivers_per_asset, unique_accounts_per_asset,
 percentage_of_total_accounts_per_asset, transactions_one_algo, involved_accounts_per_type, involved_senders_per_type, involved_receivers_per_type,
 percentage_of_total_accounts_per_type, transaction_amount_in_microalgo, closing_transactions_count, more_than_one_algo,
-more_than_one_algo_percentage, mean_amount_of_algo_sent]
+more_than_one_algo_percentage, mean_amount_of_algo_sent, percentage_of_all_transactions_per_type]
 
 with open('/home/juaneto8/Documents/Projects/Algorand/data_acquisition/lists_csv/' + 'data_lists', 'wb') as fp:
     pickle.dump(data_lists, fp)

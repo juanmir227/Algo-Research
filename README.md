@@ -1,3 +1,3 @@
 # Algo-txns-research
 
-I'm doing my thesis researching the Algorand blockchain transactions. Right now I'm working on designing the code for data analysis. Got about 12 chunks of 500 blocks of data. Right now working on generating graphs representing some statistics changing over time
+I'm doing my thesis researching the Algorand blockchain transactions. Working in doing on-chain data analysis and trying to get conclusions using only the data obtained via block and transaction exploration.
